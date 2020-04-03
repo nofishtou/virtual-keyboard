@@ -69,6 +69,7 @@ export default class App {
     window.onload = document.addEventListener('keyup', (e) => {
       e.preventDefault();
 
+      console.log(e)
       if (this.isCapsOn && e.getModifierState('Shift')) {
         this.changeKeys('lower-case');
       }
@@ -158,7 +159,6 @@ export default class App {
       }, 200);
     } else {
       key.classList.add('active');
-      this.addSymbol(key);
       setTimeout(() => {
         key.classList.remove('active');
       }, 200);

@@ -41,7 +41,7 @@ export default class App {
     window.onload = document.addEventListener('keydown', (e) => {
       e.preventDefault();
 
-      if (e.getModifierState('Control') && e.altKey) {
+      if (e.ctrlKey && e.code === 'AltLeft') {
         if (this.lang === english) {
           this.changeLanguage(russian);
         } else {
@@ -228,7 +228,7 @@ export default class App {
 
     container.classList.add('container');
     heading.innerText = 'Virtual-keyboard';
-    text.innerText = 'Расскладка для клавиатуры Windows.Смена языка на левый ctrl + alt, при использовании с экрана на Win.';
+    text.innerText = 'Расскладка для клавиатуры Windows. Смена языка на  ctrl + левый alt, при использовании с экрана на Win.';
 
     this.keyboard = Keyboard.createKeyboard(this.lang);
     this.textArea = Textarea.createTextarea();

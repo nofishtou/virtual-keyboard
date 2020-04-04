@@ -1,7 +1,7 @@
-import Keyboard from './components/keyboard.js';
-import Textarea from './components/textarea.js';
-import english from './accessories/english.js';
-import russian from './accessories/russian.js';
+import Keyboard from './components/keyboard';
+import Textarea from './components/textarea';
+import english from './accessories/english';
+import russian from './accessories/russian';
 
 export default class App {
   constructor(anchor) {
@@ -11,7 +11,7 @@ export default class App {
     this.textArea = null;
     this.lang = english;
     this.isCapsOn = false;
-    this.isShiftOn = false;
+    this.whichCtrlIsOn = null;
   }
 
   onInit() {
@@ -41,12 +41,22 @@ export default class App {
     window.onload = document.addEventListener('keydown', (e) => {
       e.preventDefault();
 
-      if (e.ctrlKey && e.altKey) {
+      if (e.getModifierState('Control') && e.altKey) {
         if (this.lang === english) {
           this.changeLanguage(russian);
         } else {
           this.changeLanguage(english);
         }
+      }
+
+      if (e.getModifierState('Control')) {
+        if (e.code === 'ControlLeft') {
+          this.whichCtrlIsOn = 'ControlLeft';
+        } else if (e.code === 'ControlRight') {
+          this.whichCtrlIsOn = 'ControlRight';
+        }
+
+        this.addActiveStatus(this.whichCtrlIsOn);
       }
 
       if (e.code === 'CapsLock') {
@@ -69,7 +79,6 @@ export default class App {
     window.onload = document.addEventListener('keyup', (e) => {
       e.preventDefault();
 
-      console.log(e)
       if (this.isCapsOn && e.getModifierState('Shift')) {
         this.changeKeys('lower-case');
       }
@@ -183,7 +192,6 @@ export default class App {
     this.keyboard = Keyboard.createKeyboard(this.lang);
     this.container.append(this.keyboard);
     this.isCapsOn = false;
-    this.isShiftOn = false;
     this.addLanguage();
     this.addEventListenerClick();
   }
@@ -220,7 +228,7 @@ export default class App {
 
     container.classList.add('container');
     heading.innerText = 'Virtual-keyboard';
-    text.innerText = 'Расскладка для клавиатуры Windows.Смена языка на ctrl + alt, при использовании с экрана на Win.';
+    text.innerText = 'Расскладка для клавиатуры Windows.Смена языка на левый ctrl + alt, при использовании с экрана на Win.';
 
     this.keyboard = Keyboard.createKeyboard(this.lang);
     this.textArea = Textarea.createTextarea();

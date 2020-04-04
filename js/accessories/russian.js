@@ -58,7 +58,7 @@ export default [[
   {
     key: '8',
     size: 'default',
-    shifted: '&',
+    shifted: '*',
     keyCode: 'Digit8',
     purpose: 'common',
   },

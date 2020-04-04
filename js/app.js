@@ -1,7 +1,7 @@
-import Keyboard from './components/keyboard';
-import Textarea from './components/textarea';
-import english from './accessories/english';
-import russian from './accessories/russian';
+import Keyboard from './components/keyboard.js';
+import Textarea from './components/textarea.js';
+import english from './accessories/english.js';
+import russian from './accessories/russian.js';
 
 export default class App {
   constructor(anchor) {

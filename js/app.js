@@ -50,7 +50,7 @@ export default class App {
         }
       }
 
-      // after changing of language make changing keys selected
+      //after changing of language make changing keys selected 
       if (e.getModifierState('Control')) {
         if (e.code === 'ControlLeft') {
           this.whichCtrlIsOn = 'ControlLeft';
@@ -61,8 +61,8 @@ export default class App {
         this.addActiveStatus(this.whichCtrlIsOn);
       }
 
-      // remove blinking of keyboard
-      if (!e.repeat) {
+      // remove flickering of keyboard
+      if (!e.repeat){
         if (e.code === 'CapsLock') {
           if (this.isCapsOn) {
             this.isCapsOn = false;
@@ -111,8 +111,8 @@ export default class App {
         } else {
           this.changeKeys('upper-case');
           this.isCapsOn = true;
-          this.addActiveStatus('CapsLock');
-        }
+          this.addActiveStatus('CapsLock')
+        }        
       }
 
       if (e.target.parentNode.classList.contains('OSLeft')) {

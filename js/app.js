@@ -28,6 +28,7 @@ export default class App {
       if (keys[i].classList.contains(code)) {
         this.addSymbol(keys[i]);
         if (keys[i].classList.contains('CapsLock')) {
+          keys[i].classList.add('active');
           break;
         }
 
@@ -49,6 +50,7 @@ export default class App {
         }
       }
 
+      // after changing of language make changing keys selected
       if (e.getModifierState('Control')) {
         if (e.code === 'ControlLeft') {
           this.whichCtrlIsOn = 'ControlLeft';
@@ -59,13 +61,17 @@ export default class App {
         this.addActiveStatus(this.whichCtrlIsOn);
       }
 
-      if (e.code === 'CapsLock') {
-        if (this.isCapsOn) {
-          this.isCapsOn = false;
-        } else {
-          this.isCapsOn = true;
+      // remove blinking of keyboard
+      if (!e.repeat) {
+        if (e.code === 'CapsLock') {
+          if (this.isCapsOn) {
+            this.isCapsOn = false;
+          } else {
+            this.isCapsOn = true;
+          }
         }
       }
+
 
       if (this.isCapsOn && e.getModifierState('Shift')) {
         this.changeKeys('lower-case');
@@ -101,11 +107,12 @@ export default class App {
         if (this.isCapsOn) {
           this.changeKeys('lower-case');
           this.isCapsOn = false;
+          this.deleteActiveStatus('CapsLock');
         } else {
           this.changeKeys('upper-case');
           this.isCapsOn = true;
+          this.addActiveStatus('CapsLock');
         }
-        this.deleteActiveStatus('CapsLock');
       }
 
       if (e.target.parentNode.classList.contains('OSLeft')) {
@@ -160,6 +167,7 @@ export default class App {
   }
 
   addAnimation(key) {
+    // add and remove animation on click
     if (key === 'OSLeft') {
       const newKey = this.keyboard.querySelector('.OSLeft');
       newKey.classList.add('active');
@@ -202,7 +210,10 @@ export default class App {
     for (let i = 0; i < keys.length; i += 1) {
       if (keys[i].classList.contains(code)) {
         if (keys[i].classList.contains('CapsLock')) {
-          keys[i].classList.toggle('active');
+          if (!this.isCapsOn) {
+            keys[i].classList.remove('active');
+            break;
+          }
           break;
         }
         keys[i].classList.remove('active');

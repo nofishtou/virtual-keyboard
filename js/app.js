@@ -1,7 +1,5 @@
 import Keyboard from './components/keyboard.js';
 import Textarea from './components/textarea.js';
-import english from './accessories/english.js';
-import russian from './accessories/russian.js';
 
 export default class App {
   constructor(anchor) {
@@ -9,7 +7,7 @@ export default class App {
     this.container = null;
     this.keyboard = null;
     this.textArea = null;
-    this.lang = english;
+    this.lang = 'english';
     this.isCapsOn = false;
     this.whichCtrlIsOn = null;
   }
@@ -43,14 +41,14 @@ export default class App {
       e.preventDefault();
 
       if (e.ctrlKey && e.code === 'AltLeft') {
-        if (this.lang === english) {
-          this.changeLanguage(russian);
+        if (this.lang === 'english') {
+          this.changeLanguage('russian');
         } else {
-          this.changeLanguage(english);
+          this.changeLanguage('english');
         }
       }
 
-      //after changing of language make changing keys selected 
+      // after changing of language make changing keys selected
       if (e.getModifierState('Control')) {
         if (e.code === 'ControlLeft') {
           this.whichCtrlIsOn = 'ControlLeft';
@@ -62,7 +60,7 @@ export default class App {
       }
 
       // remove flickering of keyboard
-      if (!e.repeat){
+      if (!e.repeat) {
         if (e.code === 'CapsLock') {
           if (this.isCapsOn) {
             this.isCapsOn = false;
@@ -111,16 +109,16 @@ export default class App {
         } else {
           this.changeKeys('upper-case');
           this.isCapsOn = true;
-          this.addActiveStatus('CapsLock')
-        }        
+          this.addActiveStatus('CapsLock');
+        }
       }
 
       if (e.target.parentNode.classList.contains('OSLeft')) {
-        if (this.lang === english) {
-          this.changeLanguage(russian);
+        if (this.lang === 'english') {
+          this.changeLanguage('russian');
           this.addAnimation('OSLeft');
         } else {
-          this.changeLanguage(english);
+          this.changeLanguage('english');
           this.addAnimation('OSLeft');
         }
       }
@@ -133,7 +131,7 @@ export default class App {
   }
 
   addLanguage() {
-    if (this.lang === english) {
+    if (this.lang === 'english') {
       localStorage.setItem('language', 'english');
     } else {
       localStorage.setItem('language', 'russian');
@@ -226,9 +224,9 @@ export default class App {
     if (localStorage.length === 0) {
       this.addLanguage();
     } else if (localStorage.getItem('language') === 'english') {
-      this.lang = english;
+      this.lang = 'english';
     } else {
-      this.lang = russian;
+      this.lang = 'russian';
     }
   }
 

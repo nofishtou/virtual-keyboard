@@ -1,5 +1,7 @@
+import keyboardData from '../accessories/keyboardData.js';
+
 export default class Keyboard {
-  static createRow(row) {
+  static createRow(row, language) {
     const container = document.createElement('div');
     container.classList.add('row');
     let key;
@@ -32,13 +34,35 @@ export default class Keyboard {
       }
 
       span = document.createElement('span');
-      span.innerHTML = el.key;
-      span.classList.add('lower-case');
-
       spanShifted = document.createElement('span');
-      spanShifted.innerHTML = el.shifted;
-      spanShifted.classList.add('hidden');
-      spanShifted.classList.add('upper-case');
+
+      if (language === 'russian') {
+        // for same keys
+        if (el.ruKey) {
+          span.innerHTML = el.ruKey;
+          span.classList.add('lower-case');
+        } else {
+          span.innerHTML = el.key;
+          span.classList.add('lower-case');
+        }
+
+        if (el.ruShifted) {
+          spanShifted.innerHTML = el.ruShifted;
+          spanShifted.classList.add('hidden');
+          spanShifted.classList.add('upper-case');
+        } else {
+          spanShifted.innerHTML = el.shifted;
+          spanShifted.classList.add('hidden');
+          spanShifted.classList.add('upper-case');
+        }
+      } else {
+        span.innerHTML = el.key;
+        span.classList.add('lower-case');
+
+        spanShifted.innerHTML = el.shifted;
+        spanShifted.classList.add('hidden');
+        spanShifted.classList.add('upper-case');
+      }
 
       key.append(span);
       key.append(spanShifted);
@@ -53,8 +77,8 @@ export default class Keyboard {
     const container = document.createElement('div');
     container.classList.add('keyboard');
 
-    language.forEach((row) => {
-      container.append(Keyboard.createRow(row));
+    keyboardData.forEach((row) => {
+      container.append(Keyboard.createRow(row, language));
     });
 
     return container;

@@ -1,3 +1,4 @@
+/* eslint-disable import/extensions */
 import keyboardData from '../accessories/keyboardData.js';
 
 export default class Keyboard {

@@ -1,3 +1,4 @@
+/* eslint-disable import/extensions */
 import Keyboard from './components/keyboard.js';
 import Textarea from './components/textarea.js';
 
